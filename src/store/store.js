@@ -4,7 +4,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const CONSTANTS = {
-  SATOSHI_VALUE: 1e-8
+  SATOSHI_VALUE: 1e-8,
+  BTC_TO_POUNDS: 5000,
+  BUFFER_SIZE: 10
 };
 
 export const store = new Vuex.Store({
@@ -17,12 +19,14 @@ export const store = new Vuex.Store({
       isSubscribed: false,
       message: '',
       reconnectError: false
-    }
+    },
+    transactions: []
   },
   getters: {
+    CONSTANTS: () => CONSTANTS,
     started: state => state.started,
     socket: state => state.socket,
-    CONSTANTS: () => CONSTANTS
+    transactions: state => state.transactions
   },
   mutations: {
     SOCKET_ONOPEN: (state, event) => {
@@ -41,6 +45,7 @@ export const store = new Vuex.Store({
     // default handler called for all methods
     SOCKET_ONMESSAGE: (state, message) => {
       state.socket.message = message;
+      state.transactions.push(message.x);
     },
     UNSUBSCRIBE: state => {
       if (state.socket.isConnected && state.socket.isSubscribed && state.connection) {

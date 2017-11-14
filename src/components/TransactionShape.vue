@@ -1,13 +1,10 @@
 <template>
   <transition name='bounce'>
     <div class='transaction-shape'>
-      <p>version: {{data.ver}}</p>
-      <p>size: {{data.size}}</p>
-      <p>hash: {{data.hash}}</p>
-      <p>vin_sz: {{data.vin_sz}}</p>
-      <p>{{data.inputs.map(item => item.prev_out.value * CONSTANTS.SATOSHI_VALUE).join(',')}}</p>
-      <p>vout_sz: {{data.vout_sz}}</p>
-      <p>{{data.out.map(item => item.value * CONSTANTS.SATOSHI_VALUE).join(',')}}</p>
+      <p>{{data.hash}}</p></p>
+      <p>£{{totalOutput.toFixed(2)}}</p>
+      <p><span v-for='n in data.vin_sz' key='n'>◀</span></p>
+      <p><span v-for='n in data.vout_sz' key='n'>▶</span></p>
     </div>
   </transition>
 </template>
@@ -19,7 +16,12 @@ export default {
   computed: {
     ...mapGetters([
       'CONSTANTS'
-    ])
+    ]),
+    totalOutput() {
+      return this.data.out.reduce((prevVal, item) => (
+        prevVal + (item.value * this.CONSTANTS.SATOSHI_VALUE * this.CONSTANTS.BTC_TO_POUNDS)
+      ), 0)
+    }
   },
   methods: {},
   props: ['data']
@@ -28,8 +30,15 @@ export default {
 
 <style scoped>
 .transaction-shape {
-  padding: 10px;
+  padding: 5px;
+  margin: 2px;
   display: inline-block;
+  font-size: 10px;
+  width: 100px;
+  height: 100px;
+  background: hotpink;
+  overflow: hidden;
+  border-radius: 50%;
 }
 .bounce-enter-active {
   animation: bounce .6s;
@@ -48,7 +57,7 @@ export default {
     transform: scale(0);
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(1.2);
   }
   100% {
     transform: scale(1);

@@ -4,10 +4,10 @@
     <p>Subscribed: {{socket.isSubscribed}}</p>
     <button v-on:click='subscribe'>Subscribe</button>
     <button v-on:click='unsubscribe'>Unsubscribe</button>
-    <section class='transactions__meta' v-if='socket.message'>
-      <transaction-shape :data='socket.message.x'></transaction-shape>
-      <textarea>Message: {{socket.message}}</textarea>
+    <section class='transaction__shapes' v-if='socket.message'>
+      <transaction-shape v-for='t in transactions' key='t.hash' :data='t'></transaction-shape>
     </section>
+    <textarea>Message: {{socket.message}}</textarea>
   </div>
 </template>
 
@@ -21,8 +21,9 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'CONSTANTS',
       'socket',
-      'CONSTANTS'
+      'transactions'
     ])
   },
   methods: {
@@ -43,5 +44,10 @@ export default {
   }
   .transactions__meta {
     text-align: left;
+  }
+  .transaction__shapes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
   }
 </style>
