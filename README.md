@@ -1,6 +1,8 @@
 # Visualising Bitcoin Transactions
 
-> A playground for Vue.js + SVG Animation
+> Playing around with WebSockets
+
+![The Viz](https://i.imgur.com/qDEOD4D.png)
 
 ## Build Setup
 

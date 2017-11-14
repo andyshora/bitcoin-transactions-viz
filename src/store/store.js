@@ -6,6 +6,7 @@ Vue.use(Vuex);
 const CONSTANTS = {
   SATOSHI_VALUE: 1e-8,
   BTC_TO_POUNDS: 5000,
+  BTC_TO_DOLLARS: 6598,
   BUFFER_SIZE: 10
 };
 

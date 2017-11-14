@@ -1,9 +1,9 @@
 <template>
   <div class='transactions'>
-    <p>Connected: {{socket.isConnected}}</p>
-    <p>Subscribed: {{socket.isSubscribed}}</p>
-    <button v-on:click='subscribe'>Subscribe</button>
-    <button v-on:click='unsubscribe'>Unsubscribe</button>
+    <section class='transactions__controls'>
+      <button v-on:click='subscribe' :disabled='socket.isSubscribed'>Start</button>
+      <button v-on:click='unsubscribe' :disabled='!socket.isSubscribed'>Stop</button>
+    </section>
     <section class='transaction__shapes' v-if='socket.message'>
       <transaction-shape v-for='t in transactions' key='t.hash' :data='t'></transaction-shape>
     </section>
@@ -37,6 +37,13 @@ export default {
 
 <style scoped>
 .transactions {}
+.transactions__controls {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
   .transactions textarea {
     width: 100%;
     height: 500px;
