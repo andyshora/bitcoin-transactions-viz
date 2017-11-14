@@ -5,14 +5,7 @@
     <button v-on:click='subscribe'>Subscribe</button>
     <button v-on:click='unsubscribe'>Unsubscribe</button>
     <section class='transactions__meta' v-if='socket.message'>
-      <p>version: {{socket.message.x.ver}}</p>
-      <p>size: {{socket.message.x.size}}</p>
-      <p>hash: {{socket.message.x.hash}}</p>
-      <p>vin_sz: {{socket.message.x.vin_sz}}</p>
-      <p>{{socket.message.x.inputs.map(item => item.prev_out.value).join(',')}}</p>
-      <p>vout_sz: {{socket.message.x.vout_sz}}</p>
-      <p>{{socket.message.x.out.map(item => item.value).join(',')}}</p>
-
+      <transaction-shape :data='socket.message.x'></transaction-shape>
       <textarea>Message: {{socket.message}}</textarea>
     </section>
   </div>
@@ -20,12 +13,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import TransactionShape from './TransactionShape';
 
 export default {
-  components: {},
+  components: {
+    'transaction-shape': TransactionShape
+  },
   computed: {
     ...mapGetters([
-      'socket'
+      'socket',
+      'CONSTANTS'
     ])
   },
   methods: {

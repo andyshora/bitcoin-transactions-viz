@@ -3,6 +3,10 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const CONSTANTS = {
+  SATOSHI_VALUE: 1e-8
+};
+
 export const store = new Vuex.Store({
   strict: true,
   state: {
@@ -17,7 +21,8 @@ export const store = new Vuex.Store({
   },
   getters: {
     started: state => state.started,
-    socket: state => state.socket
+    socket: state => state.socket,
+    CONSTANTS: () => CONSTANTS
   },
   mutations: {
     SOCKET_ONOPEN: (state, event) => {
